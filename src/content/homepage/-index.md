@@ -3,7 +3,7 @@ hero:
   eyebrow: "Designing digital products since — Y:2016"
   first_name: "Ray"
   last_name: "Hossain"
-  image: "/images/avatar.svg"
+  image: "/images/ray-hossain.webp"
   content: "I'm Ray Hossain — a product designer building clear, useful and good-looking digital products for almost a decade"
 about:
   enable: true

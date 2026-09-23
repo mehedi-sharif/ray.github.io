@@ -29,8 +29,8 @@ const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 text
         <span class="-mt-[0.15em] block">{hero.last_name}</span>
       </h1>
       <div class="absolute left-1/2 top-1/2 h-[clamp(150px,28vw,280px)] w-[clamp(94px,17.6vw,176px)] -translate-x-1/2 -translate-y-1/2">
-        <div id="hero-photo" class="h-full w-full transition-transform duration-300 ease-out">
-          <img src={url(hero.image)} alt={`${hero.first_name} ${hero.last_name}`} class="h-full w-full rounded-[85px] object-cover" />
+        <div id="hero-photo" class="h-full w-full overflow-hidden rounded-[85px] transition-transform duration-300 ease-out">
+          <img src={url(hero.image)} alt={`${hero.first_name} ${hero.last_name}`} class="h-full w-full origin-[44%_40%] scale-[1.35] object-cover object-[43%_center]" />
         </div>
       </div>
     </div>

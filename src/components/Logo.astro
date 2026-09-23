@@ -20,27 +20,48 @@ import { config, url } from "@/lib/utils";
 </a>
 
 <style>
-  .sig {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: sig-draw var(--t) cubic-bezier(.55, .1, .35, 1) var(--d) forwards;
-  }
-  .sig-dot {
-    opacity: 0;
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: sig-dot .3s ease-out 2s forwards;
-  }
-  /* Redraw on hover */
-  .logo:hover .sig { animation-name: sig-redraw; }
-  .logo:hover .sig-dot { animation-name: sig-dot-redraw; }
-
-  @keyframes sig-draw { to { stroke-dashoffset: 0; } }
-  @keyframes sig-redraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-  @keyframes sig-dot { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
-  @keyframes sig-dot-redraw { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
-
+  .sig { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .sig-dot { opacity: 0; transform-box: fill-box; transform-origin: center; }
   @media (prefers-reduced-motion: reduce) {
-    .sig, .sig-dot { animation: none; stroke-dashoffset: 0; opacity: 1; }
+    .sig { stroke-dashoffset: 0; }
+    .sig-dot { opacity: 1; }
   }
 </style>
+
+<script>
+  // Continuously write the signature stroke by stroke, hold, fade out, repeat.
+  const svg = document.querySelector<SVGSVGElement>(".logo svg");
+  if (svg && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const strokes = [...svg.querySelectorAll<SVGPathElement>(".sig")];
+    const dot = svg.querySelector<SVGCircleElement>(".sig-dot");
+    const ease = "cubic-bezier(.55,.1,.35,1)";
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    const loop = async () => {
+      while (true) {
+        svg.style.opacity = "1";
+        strokes.forEach((p) => (p.style.strokeDashoffset = "1"));
+        if (dot) dot.style.opacity = "0";
+
+        for (const p of strokes) {
+          const duration = parseFloat(p.style.getPropertyValue("--t")) * 1000 || 500;
+          await p.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration, easing: ease, fill: "forwards" }).finished;
+          p.style.strokeDashoffset = "0";
+        }
+        if (dot) {
+          await dot.animate([{ opacity: 0, transform: "scale(0)" }, { opacity: 1, transform: "scale(1)" }], { duration: 300, easing: "ease-out", fill: "forwards" }).finished;
+          dot.style.opacity = "1";
+        }
+
+        await wait(2200);
+        await svg.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, fill: "forwards" }).finished;
+        svg.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+        svg.style.opacity = "0";
+        await wait(300);
+      }
+    };
+    loop();
+  } else if (svg) {
+    svg.querySelectorAll<SVGPathElement>(".sig").forEach((p) => (p.style.strokeDashoffset = "0"));
+  }
+</script>
