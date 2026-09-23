@@ -25,6 +25,8 @@ const aliasPaths = new Set(
 export default defineConfig({
   site,
   trailingSlash: "ignore",
+  // Inline CSS into each page: one less render-blocking request on first paint.
+  build: { inlineStylesheets: "always" },
   integrations: [
     sitemap({ filter: (page) => !aliasPaths.has(new URL(page).pathname) }),
   ],

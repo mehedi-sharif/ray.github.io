@@ -1,5 +1,13 @@
 ---
+import "@fontsource/big-shoulders/700.css";
+import "@fontsource/big-shoulders/900.css";
+import "@fontsource/dm-sans/400.css";
+import "@fontsource/dm-sans/500.css";
+import "@fontsource/dm-sans/600.css";
+import "@fontsource/dm-sans/700.css";
 import "@/styles/global.css";
+// The hero name (the LCP element) is Big Shoulders 900 — preload it so text paints in its final font.
+import heroFont from "@fontsource/big-shoulders/files/big-shoulders-latin-900-normal.woff2?url";
 import { ClientRouter } from "astro:transitions";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -42,9 +50,7 @@ const theme = config.settings.default_theme;
     <meta name="twitter:description" content={pageDescription} />
     <link rel="sitemap" href={url("/sitemap-index.xml")} />
     <link rel="icon" href={url(config.site.favicon)} type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" href={heroFont} as="font" type="font/woff2" crossorigin />
     <script is:inline define:vars={{ theme }}>
       // "dark" is rendered on <html> by the server; this only matters for "system", and must survive page swaps.
       const applyTheme = () => {

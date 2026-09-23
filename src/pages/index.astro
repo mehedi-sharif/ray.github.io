@@ -21,7 +21,7 @@ const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 [&:n
 <Base>
   <!-- Intro -->
   <section id="home" class="wrap flex flex-col items-center pt-10 text-center md:pt-[90px]">
-    <p class="eyebrow reveal">{hero.eyebrow}</p>
+    <p class="eyebrow">{hero.eyebrow}</p>
     <div class="relative mt-2.5 w-full">
       <h1 class="font-display text-hero font-black uppercase leading-[1.1] tracking-[-0.02em] text-accent">
         <span class="block">{hero.first_name}</span>
@@ -29,14 +29,14 @@ const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 [&:n
       </h1>
       <div class="absolute left-1/2 top-1/2 h-[clamp(150px,28vw,280px)] w-[clamp(94px,17.6vw,176px)] -translate-x-1/2 -translate-y-1/2">
         <div id="hero-photo" class="h-full w-full overflow-hidden rounded-[85px] transition-transform duration-300 ease-out">
-          <img src={url(hero.image)} alt={`${hero.first_name} ${hero.last_name}`} class="h-full w-full origin-[44%_40%] scale-[1.35] object-cover object-[43%_center]" />
+          <img src={url(hero.image)} alt={`${hero.first_name} ${hero.last_name}`} width="640" height="640" loading="eager" fetchpriority="high" decoding="async" class="h-full w-full origin-[44%_40%] scale-[1.35] object-cover object-[43%_center]" />
         </div>
       </div>
     </div>
     <div class="mt-2.5 flex h-20 items-center justify-center">
       <Star class="h-12 w-12 text-accent" />
     </div>
-    <p class="reveal mt-[26px] max-w-[550px] text-body leading-[1.8] md:text-lead">{hero.content}</p>
+    <p class="mt-[26px] max-w-[550px] text-body leading-[1.8] md:text-lead">{hero.content}</p>
     <a href="#about" class="mt-[26px] flex flex-col items-center gap-[11px] pt-[44px]">
       <span class="relative block h-[33px] w-[3px] overflow-hidden bg-ink/20">
         <span class="animate-scroll-line absolute left-0 top-0 block h-3.5 w-[3px] bg-accent"></span>
