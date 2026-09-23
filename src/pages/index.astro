@@ -151,9 +151,12 @@ const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 [&:n
 </Base>
 
 <script>
-  const photo = document.getElementById("hero-photo");
-  if (photo && matchMedia("(pointer: fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  // One window listener for the whole session; it looks up the photo each time because
+  // <ClientRouter /> replaces the page (the photo only exists on the homepage).
+  if (matchMedia("(pointer: fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
     window.addEventListener("mousemove", (e) => {
+      const photo = document.getElementById("hero-photo");
+      if (!photo) return;
       const x = (e.clientX / innerWidth - 0.5) * 24;
       const y = (e.clientY / innerHeight - 0.5) * 24;
       photo.style.transform = `translate(${x}px, ${y}px)`;

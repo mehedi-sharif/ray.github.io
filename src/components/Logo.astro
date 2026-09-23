@@ -1,7 +1,7 @@
 ---
 import { config, url } from "@/lib/utils";
 ---
-<a href={url("/")} aria-label="Home" class="logo absolute left-1/2 top-1/2 flex h-[69px] w-[100px] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+<a href={url("/")} aria-label="Home" transition:persist="site-logo" class="logo absolute left-1/2 top-1/2 flex h-[69px] w-[100px] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
   {config.site.logo ? (
     <img src={url(config.site.logo)} alt={config.site.title} class="max-h-full max-w-full" />
   ) : (
@@ -30,15 +30,23 @@ import { config, url } from "@/lib/utils";
 
 <script>
   // Continuously write the signature stroke by stroke, hold, fade out, repeat.
-  const svg = document.querySelector<SVGSVGElement>(".logo svg");
-  if (svg && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  // The logo is persisted across page swaps (transition:persist), so each <svg> is started exactly once,
+  // and a loop ends by itself if its <svg> is ever removed from the page.
+  const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const ease = "cubic-bezier(.55,.1,.35,1)";
+
+  const start = (svg: SVGSVGElement) => {
     const strokes = [...svg.querySelectorAll<SVGPathElement>(".sig")];
     const dot = svg.querySelector<SVGCircleElement>(".sig-dot");
-    const ease = "cubic-bezier(.55,.1,.35,1)";
-    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      strokes.forEach((p) => (p.style.strokeDashoffset = "0"));
+      if (dot) dot.style.opacity = "1";
+      return;
+    }
 
     const loop = async () => {
-      while (true) {
+      while (svg.isConnected) {
         svg.style.opacity = "1";
         strokes.forEach((p) => (p.style.strokeDashoffset = "1"));
         if (dot) dot.style.opacity = "0";
@@ -61,7 +69,12 @@ import { config, url } from "@/lib/utils";
       }
     };
     loop();
-  } else if (svg) {
-    svg.querySelectorAll<SVGPathElement>(".sig").forEach((p) => (p.style.strokeDashoffset = "0"));
-  }
+  };
+
+  document.addEventListener("astro:page-load", () => {
+    const svg = document.querySelector<SVGSVGElement>(".logo svg");
+    if (!svg || svg.dataset.started) return;
+    svg.dataset.started = "true";
+    start(svg);
+  });
 </script>
