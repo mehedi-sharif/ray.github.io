@@ -1,13 +1,13 @@
 ---
-title: "Designing with constraints"
-description: "Why the best ideas often start with a tight brief."
+title: "What $10M in ad spend taught me"
+description: "Lessons on testing, scaling and knowing when to cut a campaign."
 date: 2025-06-02
 image: "/images/blog/post-1.svg"
-category: "Design"
+category: "Ads"
 draft: false
 ---
 
-Why the best ideas often start with a tight brief.
+Lessons on testing, scaling and knowing when to cut a campaign.
 
 ## The short version
 

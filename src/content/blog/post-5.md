@@ -1,13 +1,13 @@
 ---
-title: "Weekend bread baking"
-description: "A non-design post about patience and sourdough."
+title: "Staying a lifetime learner"
+description: "The habits that keep me curious and improving every year."
 date: 2025-02-22
 image: "/images/blog/post-5.svg"
-category: "Life"
+category: "Learning"
 draft: false
 ---
 
-A non-design post about patience and sourdough.
+The habits that keep me curious and improving every year.
 
 ## The short version
 

@@ -1,5 +1,5 @@
 ---
-title: "Icon Set"
+title: "Video Scripts"
 image: "/images/projects/project-2.svg"
 link: ""
 weight: 2

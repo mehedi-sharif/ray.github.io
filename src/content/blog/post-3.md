@@ -1,13 +1,13 @@
 ---
-title: "Motion that means something"
-description: "A simple test for deciding when interfaces should move."
+title: "From problem to profit"
+description: "A simple framework for turning business problems into testable ideas."
 date: 2025-04-09
 image: "/images/blog/post-3.svg"
-category: "Design"
+category: "Business"
 draft: false
 ---
 
-A simple test for deciding when interfaces should move.
+A simple framework for turning business problems into testable ideas.
 
 ## The short version
 

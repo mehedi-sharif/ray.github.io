@@ -1,13 +1,13 @@
 ---
-title: "Notes on sketching"
-description: "How pen and paper still shape my digital work."
+title: "Writing hooks that stop the scroll"
+description: "How I structure the first three seconds of every ad script."
 date: 2025-05-18
 image: "/images/blog/post-2.svg"
-category: "Process"
+category: "Scripts"
 draft: false
 ---
 
-How pen and paper still shape my digital work.
+How I structure the first three seconds of every ad script.
 
 ## The short version
 

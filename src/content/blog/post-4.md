@@ -1,13 +1,13 @@
 ---
-title: "Readable color palettes"
-description: "Practical checks for contrast and accessibility."
+title: "Creative vs. targeting"
+description: "Why the ad itself is often the biggest lever you have."
 date: 2025-03-14
 image: "/images/blog/post-4.svg"
-category: "Design"
+category: "Ads"
 draft: false
 ---
 
-Practical checks for contrast and accessibility.
+Why the ad itself is often the biggest lever you have.
 
 ## The short version
 
