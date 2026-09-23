@@ -1,7 +1,16 @@
 ---
 import Ticker from "@/components/Ticker.astro";
-import { config } from "@/lib/utils";
+import { config, url } from "@/lib/utils";
+const { footer, social } = config;
 ---
 <footer class="mt-[120px] overflow-hidden">
-  <Ticker words={config.social.map((s) => s.label)} links={config.social.map((s) => s.link)} size="lg" />
+  <Ticker words={footer.ticker} links={footer.ticker.map(() => url(footer.ticker_link))} size="lg" newTab={false} />
+  <div class="wrap flex flex-col items-center justify-between gap-4 border-t border-ink/10 py-8 text-base font-medium text-ink/50 md:flex-row">
+    <p>© {new Date().getFullYear()} {footer.copyright}</p>
+    <ul class="flex gap-6">
+      {social.map((s) => (
+        <li><a href={s.link} target="_blank" rel="noopener" class="transition-colors hover:text-accent">{s.name}</a></li>
+      ))}
+    </ul>
+  </div>
 </footer>

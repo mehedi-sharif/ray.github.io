@@ -15,16 +15,24 @@
   },
   "social": [
     {
-      "label": "IN",
+      "name": "LinkedIn",
       "link": "https://linkedin.com"
     },
     {
-      "label": "DR",
-      "link": "https://dribbble.com"
+      "name": "Facebook",
+      "link": "https://facebook.com"
     },
     {
-      "label": "IG",
+      "name": "Instagram",
       "link": "https://instagram.com"
     }
-  ]
+  ],
+  "footer": {
+    "ticker": [
+      "Let's Work Together",
+      "Say Hello"
+    ],
+    "ticker_link": "/#contact",
+    "copyright": "Ray Hossain. All rights reserved."
+  }
 }
