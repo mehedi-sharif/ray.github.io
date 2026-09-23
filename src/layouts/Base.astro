@@ -23,9 +23,7 @@ const theme = config.settings.default_theme;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script is:inline define:vars={{ theme }}>
-      let saved = null;
-      try { saved = localStorage.getItem("theme"); } catch {}
-      const dark = saved ? saved === "dark" : theme === "dark" || (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+      const dark = theme === "dark" || (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
       document.documentElement.classList.toggle("dark", dark);
     </script>
   </head>

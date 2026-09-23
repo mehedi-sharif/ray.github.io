@@ -1,12 +1,12 @@
 {
   "site": {
-    "title": "Your Name — Portfolio",
-    "description": "Personal portfolio of Your Name, product designer.",
+    "title": "Ray Hossain — Portfolio",
+    "description": "Personal portfolio of Ray Hossain.",
     "favicon": "/favicon.svg",
     "logo": ""
   },
   "settings": {
-    "default_theme": "light"
+    "default_theme": "dark"
   },
   "header_button": {
     "enable": true,
@@ -14,8 +14,17 @@
     "link": "#contact"
   },
   "social": [
-    { "label": "IN", "link": "https://linkedin.com" },
-    { "label": "DR", "link": "https://dribbble.com" },
-    { "label": "IG", "link": "https://instagram.com" }
+    {
+      "label": "IN",
+      "link": "https://linkedin.com"
+    },
+    {
+      "label": "DR",
+      "link": "https://dribbble.com"
+    },
+    {
+      "label": "IG",
+      "link": "https://instagram.com"
+    }
   ]
 }
