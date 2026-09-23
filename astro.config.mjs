@@ -1,10 +1,9 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
-// GitHub Pages project site: https://mehedi-sharif.github.io/ray.github.io/
+// Hosted on GitHub Pages with the custom domain https://rayhossain.com (DNS on Cloudflare)
 export default defineConfig({
-  site: "https://mehedi-sharif.github.io",
-  base: "/ray.github.io",
+  site: "https://rayhossain.com",
   trailingSlash: "ignore",
   vite: { plugins: [tailwindcss()] },
 });
