@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import { formatDate, url } from "@/lib/utils";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<Base title={post.data.meta_title ?? post.data.title} description={post.data.description} image={post.data.image}>
+  <article class="wrap pt-20">
+    <div class="mx-auto max-w-[680px] text-center">
+      <p class="eyebrow">{formatDate(post.data.date)} · <span class="text-accent">{post.data.category}</span></p>
+      <h1 class="mt-5 font-display text-[64px] font-black uppercase leading-none tracking-[-0.01em] text-accent md:text-[96px]">{post.data.title}</h1>
+    </div>
+    <img src={url(post.data.image)} alt="" class="mt-14 aspect-[3/2] w-full rounded-lg object-cover" />
+    <div class="mx-auto mt-14 max-w-[680px] space-y-6 text-[18px] leading-[1.7] [&_a]:text-accent [&_h2]:pt-4 [&_h2]:text-[26px] [&_h2]:font-semibold [&_li]:ml-5 [&_ul]:list-disc">
+      <Content />
+    </div>
+    <div class="mx-auto mt-16 max-w-[680px]">
+      <a href={url("/#writing")} class="text-base font-medium text-accent hover:underline">← All writing</a>
+    </div>
+  </article>
+</Base>

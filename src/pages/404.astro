@@ -1,0 +1,12 @@
+---
+import Base from "@/layouts/Base.astro";
+import { url } from "@/lib/utils";
+---
+<Base title="Page not found">
+  <section class="wrap flex flex-col items-center pt-20 text-center">
+    <p class="eyebrow">Error</p>
+    <h1 class="font-display text-[clamp(160px,40vw,360px)] font-black leading-none text-accent">404</h1>
+    <p class="max-w-[550px] text-[22px] leading-[1.8]">This page doesn't exist or was moved.</p>
+    <a href={url("/")} class="mt-10 flex h-[55px] items-center rounded-lg bg-accent px-10 font-medium text-bg">Back home</a>
+  </section>
+</Base>

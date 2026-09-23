@@ -1,0 +1,59 @@
+---
+import Logo from "@/components/Logo.astro";
+import { config, menu, url } from "@/lib/utils";
+const btn = config.header_button;
+---
+<header class="sticky top-0 z-50 bg-bg pt-5 transition-colors duration-300 md:pt-10">
+  <div class="wrap relative flex h-[70px] items-center justify-between">
+    <div class="relative">
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-menu" class="group relative block h-[50px] w-10">
+        <span class="bar-top absolute left-[3px] top-[14px] h-0.5 w-[34px] rounded-[10px] bg-ink transition-all duration-300"></span>
+        <span class="bar-mid absolute left-[3px] top-[24px] h-0.5 w-[19px] rounded-[10px] bg-ink transition-all duration-300"></span>
+        <span class="bar-bot absolute left-[3px] top-[34px] h-0.5 w-[26px] rounded-[10px] bg-ink transition-all duration-300"></span>
+      </button>
+      <nav id="site-menu" class="pointer-events-none absolute left-0 top-[70px] -translate-y-2 opacity-0 transition duration-300">
+        <ul>
+          {menu.main.map((item, i) => (
+            <li>
+              <a href={url(item.url)} data-menu-link class:list={["font-display text-[32px] font-bold uppercase leading-[1.4] tracking-[0.04em] transition-colors hover:text-accent", i === 0 ? "text-accent" : "text-ink"]}>{item.name}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <Logo />
+
+    <div class="flex items-center gap-2.5">
+      <button id="theme-toggle" aria-label="Toggle dark mode" class="relative h-[34px] w-[65px] rounded-[43px] bg-ink/10">
+        <span class="absolute left-1 top-1 h-[27px] w-[27px] rounded-[22px] bg-bg transition-transform duration-300 dark:translate-x-[30px]"></span>
+      </button>
+      {btn.enable && (
+        <a href={url(btn.link)} class="hidden h-[43px] items-center rounded-[50px] bg-ink px-6 text-base font-medium text-bg transition-opacity hover:opacity-80 sm:flex">{btn.label}</a>
+      )}
+    </div>
+  </div>
+</header>
+
+<style>
+  #menu-toggle[aria-expanded="true"] .bar-top { top: 24px; width: 26px; transform: rotate(45deg); }
+  #menu-toggle[aria-expanded="true"] .bar-mid { opacity: 0; }
+  #menu-toggle[aria-expanded="true"] .bar-bot { top: 24px; width: 26px; transform: rotate(-45deg); }
+  #site-menu.open { opacity: 1; transform: none; pointer-events: auto; }
+</style>
+
+<script>
+  const toggle = document.getElementById("menu-toggle")!;
+  const nav = document.getElementById("site-menu")!;
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute("aria-expanded", String(open));
+    nav.classList.toggle("open", open);
+  };
+  toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+  nav.querySelectorAll("[data-menu-link]").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+  document.addEventListener("keydown", (e) => e.key === "Escape" && setOpen(false));
+  document.getElementById("theme-toggle")!.addEventListener("click", () => {
+    const dark = document.documentElement.classList.toggle("dark");
+    try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch {}
+  });
+</script>

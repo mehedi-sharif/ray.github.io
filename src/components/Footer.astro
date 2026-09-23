@@ -1,0 +1,7 @@
+---
+import Ticker from "@/components/Ticker.astro";
+import { config } from "@/lib/utils";
+---
+<footer class="mt-[120px] overflow-hidden">
+  <Ticker words={config.social.map((s) => s.label)} links={config.social.map((s) => s.link)} size="lg" />
+</footer>

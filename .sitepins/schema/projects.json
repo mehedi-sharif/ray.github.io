@@ -1,0 +1,13 @@
+{
+  "file": "src/content/projects/project-1.md",
+  "name": "projects",
+  "fileType": "md",
+  "fmType": "yaml",
+  "template": [
+    { "name": "title", "label": "Title", "type": "string", "value": "", "isRequired": true },
+    { "name": "image", "label": "Image", "type": "media", "value": "", "isRequired": true },
+    { "name": "link", "label": "Link", "type": "string", "value": "" },
+    { "name": "weight", "label": "Weight", "type": "number", "value": 0 },
+    { "name": "draft", "label": "Draft", "type": "boolean", "value": false }
+  ]
+}

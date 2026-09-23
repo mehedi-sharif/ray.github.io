@@ -1,0 +1,21 @@
+{
+  "site": {
+    "title": "Your Name — Portfolio",
+    "description": "Personal portfolio of Your Name, product designer.",
+    "favicon": "/favicon.svg",
+    "logo": ""
+  },
+  "settings": {
+    "default_theme": "light"
+  },
+  "header_button": {
+    "enable": true,
+    "label": "Hire me",
+    "link": "#contact"
+  },
+  "social": [
+    { "label": "IN", "link": "https://linkedin.com" },
+    { "label": "DR", "link": "https://dribbble.com" },
+    { "label": "IG", "link": "https://instagram.com" }
+  ]
+}

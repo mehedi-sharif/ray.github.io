@@ -1,0 +1,10 @@
+---
+const { title } = Astro.props as { title: string };
+---
+<div class="reveal mb-[63px] flex items-center gap-10">
+  <h2 class="title-display shrink-0">{title}</h2>
+  <div class="relative h-1 flex-1 overflow-hidden bg-ink/10">
+    <span class="absolute right-0 top-0 h-1 w-10 bg-accent"></span>
+    <span class="animate-line-pulse absolute right-0 top-0 h-1 w-5 bg-accent"></span>
+  </div>
+</div>

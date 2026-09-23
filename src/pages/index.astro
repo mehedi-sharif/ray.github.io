@@ -1,0 +1,159 @@
+---
+import { getCollection, getEntry } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import SectionTitle from "@/components/SectionTitle.astro";
+import Timeline from "@/components/Timeline.astro";
+import NumberGrid from "@/components/NumberGrid.astro";
+import Ticker from "@/components/Ticker.astro";
+import PostRow from "@/components/PostRow.astro";
+import Star from "@/components/Star.astro";
+import { url } from "@/lib/utils";
+
+const home = await getEntry("homepage", "-index");
+if (!home) throw new Error("Missing src/content/homepage/-index.md");
+const { hero, about, projects, experience, stats, ticker, education, writing, skills, contact } = home.data;
+
+const projectList = (await getCollection("projects", ({ data }) => !data.draft)).sort((a, b) => a.data.weight - b.data.weight);
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, writing.limit);
+const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 text-ink outline-none placeholder:text-ink/40 focus:ring-2 focus:ring-accent";
+---
+<Base>
+  <!-- Intro -->
+  <section id="home" class="wrap flex flex-col items-center pt-10 text-center md:pt-[90px]">
+    <p class="eyebrow reveal">{hero.eyebrow}</p>
+    <div class="relative mt-2.5 w-full">
+      <h1 class="font-display text-[clamp(96px,26vw,260px)] font-black uppercase leading-[1.1] tracking-[-0.02em] text-accent">
+        <span class="block">{hero.first_name}</span>
+        <span class="-mt-[0.15em] block">{hero.last_name}</span>
+      </h1>
+      <div class="absolute left-1/2 top-1/2 h-[clamp(150px,28vw,280px)] w-[clamp(94px,17.6vw,176px)] -translate-x-1/2 -translate-y-1/2">
+        <div id="hero-photo" class="h-full w-full transition-transform duration-300 ease-out">
+          <img src={url(hero.image)} alt={`${hero.first_name} ${hero.last_name}`} class="h-full w-full rounded-[85px] object-cover" />
+        </div>
+      </div>
+    </div>
+    <div class="mt-2.5 flex h-20 items-center justify-center">
+      <Star class="h-12 w-12 text-accent" />
+    </div>
+    <p class="reveal mt-[26px] max-w-[550px] text-[18px] leading-[1.8] md:text-[22px]">{hero.content}</p>
+    <a href="#about" class="mt-[26px] flex flex-col items-center gap-[11px] pt-[44px]">
+      <span class="relative block h-[33px] w-[3px] overflow-hidden bg-ink/20">
+        <span class="animate-scroll-line absolute left-0 top-0 block h-3.5 w-[3px] bg-accent"></span>
+      </span>
+      <span class="eyebrow">Scroll</span>
+    </a>
+  </section>
+
+  {about.enable && (
+    <section id="about" class="wrap pt-[150px]">
+      <SectionTitle title={about.title} />
+      <div class="grid grid-cols-1 items-start gap-10 md:grid-cols-2 md:gap-[68px]">
+        <p class="reveal text-[20px] leading-[1.7] text-ink/50 md:sticky md:top-[160px] md:text-[22px]">{about.lead}</p>
+        <div>
+          <p class="reveal text-[18px] leading-[1.7]">{about.content}</p>
+          <div class="mt-10 space-y-8">
+            {about.tools.map((tool) => (
+              <div class="reveal flex h-[142px] items-center rounded-lg bg-accent px-[22px] text-bg">
+                <div class="min-w-0 flex-1 md:w-[161px] md:flex-none">
+                  <p class="text-[26px] font-semibold leading-[1.1]">{tool.name}</p>
+                  <p class="mt-2.5 text-[16px] leading-[1.2] md:text-[18px]">{tool.note}</p>
+                </div>
+                <span class="mx-5 h-[46px] w-0.5 shrink-0 bg-bg/30 md:mx-8"></span>
+                <p class="shrink-0 text-[40px] font-semibold leading-[1.2] text-bg/30 md:text-[60px]">{tool.value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {projects.enable && (
+    <section id="projects" class="wrap pt-[150px]">
+      <SectionTitle title={projects.title} />
+      <div class="grid gap-10 md:grid-cols-2">
+        {projectList.map((p) => (
+          <a href={p.data.link ? url(p.data.link) : "#projects"} class="reveal group relative block aspect-[444/320] overflow-hidden rounded-[4px]">
+            <img src={url(p.data.image)} alt={p.data.title} loading="lazy" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <span class="absolute bottom-0 left-0 flex h-[65px] -translate-x-full items-center rounded-tr-lg bg-accent px-8 text-[18px] font-bold tracking-[-0.02em] text-bg opacity-0 transition duration-500 group-hover:translate-x-0 group-hover:opacity-100">{p.data.title}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {experience.enable && (
+    <section id="experience" class="wrap pt-[150px]">
+      <SectionTitle title={experience.title} />
+      <Timeline items={experience.items} />
+    </section>
+  )}
+
+  {stats.enable && (
+    <section class="wrap pt-[65px]">
+      <NumberGrid items={stats.items} />
+    </section>
+  )}
+
+  {ticker.enable && (
+    <section class="pt-[100px]" aria-hidden="true">
+      <Ticker words={ticker.words} direction="left" />
+      <div class="-mt-[26px]"><Ticker words={ticker.words} direction="right" /></div>
+    </section>
+  )}
+
+  {education.enable && (
+    <section id="education" class="wrap pt-[150px]">
+      <SectionTitle title={education.title} />
+      <Timeline items={education.items} />
+    </section>
+  )}
+
+  {writing.enable && (
+    <section id="writing" class="wrap pt-[150px]">
+      <SectionTitle title={writing.title} />
+      {posts.map((post, i) => <PostRow post={post} first={i === 0} />)}
+    </section>
+  )}
+
+  {skills.enable && (
+    <section class="wrap pt-[135px]">
+      <NumberGrid items={skills.items} />
+    </section>
+  )}
+
+  {contact.enable && (
+    <section id="contact" class="wrap pt-[150px]">
+      <SectionTitle title={contact.title} />
+      <div class="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-[68px]">
+        <div class="reveal">
+          <p class="text-[20px] leading-[1.7] md:text-[22px]">{contact.content}</p>
+          <ul class="mt-8 text-base font-medium leading-[1.7]">
+            <li>{contact.address}</li>
+            <li><a href={`mailto:${contact.email}`} class="text-accent hover:underline">{contact.email}</a></li>
+            <li><a href={`https://${contact.website.replace(/^https?:\/\//, "")}`} target="_blank" rel="noopener" class="text-accent hover:underline">{contact.website}</a></li>
+          </ul>
+        </div>
+        <form action={contact.form_action} method="POST" class="reveal grid grid-cols-2 gap-5">
+          <input name="name" required placeholder="Your name" aria-label="Name" class={field} />
+          <input name="email" type="email" required placeholder="you@email.com" aria-label="Email" class={field} />
+          <textarea name="message" required placeholder="Message..." aria-label="Message" class={`${field} col-span-2 h-[150px] resize-y leading-[1.5]`}></textarea>
+          <button class="col-span-2 h-[55px] rounded-lg bg-accent text-base font-medium text-bg transition-opacity hover:opacity-85">{contact.button_label}</button>
+        </form>
+      </div>
+    </section>
+  )}
+</Base>
+
+<script>
+  const photo = document.getElementById("hero-photo");
+  if (photo && matchMedia("(pointer: fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / innerWidth - 0.5) * 24;
+      const y = (e.clientY / innerHeight - 0.5) * 24;
+      photo.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  }
+</script>

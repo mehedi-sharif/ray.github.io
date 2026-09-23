@@ -1,0 +1,11 @@
+{
+  "main": [
+    { "name": "Home", "url": "/#home" },
+    { "name": "About", "url": "/#about" },
+    { "name": "Projects", "url": "/#projects" },
+    { "name": "Experience", "url": "/#experience" },
+    { "name": "Education", "url": "/#education" },
+    { "name": "Writing", "url": "/#writing" },
+    { "name": "Contact", "url": "/#contact" }
+  ]
+}
