@@ -1,14 +1,46 @@
 ---
 import { config, url } from "@/lib/utils";
 ---
-<a href={url("/")} aria-label="Home" class="absolute left-1/2 top-1/2 flex h-[69px] w-[100px] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+<a href={url("/")} aria-label="Home" class="logo absolute left-1/2 top-1/2 flex h-[69px] w-[100px] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
   {config.site.logo ? (
     <img src={url(config.site.logo)} alt={config.site.title} class="max-h-full max-w-full" />
   ) : (
-    <svg viewBox="0 0 90 60" class="h-[52px] w-[80px] text-ink" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M14 10c-2 14-3 28-1 40M13 36c6-10 14-14 16-8 1 5-4 14-10 18 8-2 15-6 20-14" />
-      <path d="M40 30c3 10 8 16 13 9 4-6 5-15 4-22-1 9 2 25 9 26 5 0 9-6 12-12" />
-      <circle cx="82" cy="46" r="1.6" fill="currentColor" />
+    <svg viewBox="0 0 100 64" class="h-[56px] w-[88px] overflow-visible text-ink" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Ray">
+      <!-- R: stem, bowl and leg -->
+      <path class="sig" style="--d:0s;--t:.35s" pathLength="1" d="M16 12c-1 12-2 24-3 36" />
+      <path class="sig" style="--d:.3s;--t:.55s" pathLength="1" d="M15 15c8-5 18-4 18 3 0 7-9 11-18 11 6 3 11 10 16 17 2 3 5 3 7 0" />
+      <!-- a -->
+      <path class="sig" style="--d:.8s;--t:.5s" pathLength="1" d="M48 34c-3-4-10-2-11 4-1 6 5 8 9 2l2-6c-1 5-1 10 2 11 2 0 4-2 5-4" />
+      <!-- y -->
+      <path class="sig" style="--d:1.25s;--t:.75s" pathLength="1" d="M55 32c0 6 1 11 5 11 4 0 6-5 7-11 0 11-1 19-6 23-4 3-9 1-7-3 2-5 13-9 24-15" />
+      <!-- flourish dot -->
+      <circle class="sig-dot" cx="84" cy="44" r="1.8" fill="currentColor" stroke="none" />
     </svg>
   )}
 </a>
+
+<style>
+  .sig {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: sig-draw var(--t) cubic-bezier(.55, .1, .35, 1) var(--d) forwards;
+  }
+  .sig-dot {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: sig-dot .3s ease-out 2s forwards;
+  }
+  /* Redraw on hover */
+  .logo:hover .sig { animation-name: sig-redraw; }
+  .logo:hover .sig-dot { animation-name: sig-dot-redraw; }
+
+  @keyframes sig-draw { to { stroke-dashoffset: 0; } }
+  @keyframes sig-redraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes sig-dot { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+  @keyframes sig-dot-redraw { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sig, .sig-dot { animation: none; stroke-dashoffset: 0; opacity: 1; }
+  }
+</style>
