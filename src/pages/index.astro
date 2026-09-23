@@ -56,12 +56,16 @@ const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 [&:n
           <div class="mt-8 space-y-8">
             {about.tools.map((tool) => (
               <div class="reveal flex h-[142px] items-center rounded-lg bg-accent px-[22px] text-bg">
-                <div class="min-w-0 flex-1 md:w-[161px] md:flex-none">
+                <div class:list={["min-w-0 flex-1", tool.value && "md:w-[161px] md:flex-none"]}>
                   <p class="text-[26px] font-semibold leading-[1.1]">{tool.name}</p>
                   <p class="mt-2.5 text-[16px] leading-[1.2] md:text-[18px]">{tool.note}</p>
                 </div>
-                <span class="mx-5 h-[46px] w-0.5 shrink-0 bg-bg/30 md:mx-8"></span>
-                <p class="shrink-0 text-[40px] font-semibold leading-[1.2] text-bg/30 md:text-[60px]">{tool.value}</p>
+                {tool.value && (
+                  <>
+                    <span class="mx-5 h-[46px] w-0.5 shrink-0 bg-bg/30 md:mx-8"></span>
+                    <p class="shrink-0 text-[40px] font-semibold leading-[1.2] text-bg/30 md:text-[60px]">{tool.value}</p>
+                  </>
+                )}
               </div>
             ))}
           </div>

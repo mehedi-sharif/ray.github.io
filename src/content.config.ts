@@ -21,7 +21,7 @@ const homepage = defineCollection({
       title: z.string(),
       lead: z.string(),
       content: z.string(),
-      tools: z.array(z.object({ name: z.string(), note: z.string(), value: z.string() })),
+      tools: z.array(z.object({ name: z.string(), note: z.string(), value: z.string().optional() })),
     }),
     projects: z.object({ enable: z.boolean(), title: z.string() }),
     experience: z.object({ enable: z.boolean(), title: z.string(), items: timeline }),

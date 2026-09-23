@@ -13,13 +13,10 @@ about:
   tools:
     - name: "Media Buying"
       note: "Paid ads that scale"
-      value: "95%"
     - name: "Scriptwriting"
       note: "Ads and videos that convert"
-      value: "93%"
     - name: "Problem Solving"
       note: "Growth and strategy"
-      value: "90%"
 projects:
   enable: true
   title: "Projects"
