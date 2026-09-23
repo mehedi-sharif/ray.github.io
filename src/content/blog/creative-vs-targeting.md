@@ -5,6 +5,9 @@ date: 2025-03-14
 image: "/images/blog/post-4.svg"
 category: "Ads"
 draft: false
+aliases:
+  - "/blog/post-4/"
+  - "/blog/creative-vs-targeting/"
 ---
 
 Why the ad itself is often the biggest lever you have.

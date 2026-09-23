@@ -5,6 +5,9 @@ date: 2025-02-22
 image: "/images/blog/post-5.svg"
 category: "Learning"
 draft: false
+aliases:
+  - "/blog/post-5/"
+  - "/blog/staying-a-lifetime-learner/"
 ---
 
 The habits that keep me curious and improving every year.

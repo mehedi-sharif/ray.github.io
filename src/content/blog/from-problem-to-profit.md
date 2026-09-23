@@ -5,6 +5,9 @@ date: 2025-04-09
 image: "/images/blog/post-3.svg"
 category: "Business"
 draft: false
+aliases:
+  - "/blog/post-3/"
+  - "/blog/from-problem-to-profit/"
 ---
 
 A simple framework for turning business problems into testable ideas.

@@ -64,6 +64,8 @@ const blog = defineCollection({
     image: z.string(),
     category: z.string(),
     draft: z.boolean().default(false),
+    // Old URLs for this post. Renaming a file? Add its old path here so shared links keep working.
+    aliases: z.array(z.string()).optional().default([]),
   }),
 });
 

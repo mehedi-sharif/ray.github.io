@@ -9,10 +9,10 @@ const columns = [items.slice(0, half), items.slice(half)];
     <div>
       {col.map((item, i) => (
         <div class:list={["reveal", (i > 0 || c > 0) && "max-md:border-t max-md:border-ink/10 max-md:pt-[60px]", i > 0 && "md:border-t md:border-ink/10 md:pt-[115px]", "pb-[35px]"]}>
-          <h3 class="text-[20px] font-semibold leading-[1.4]">{item.title}</h3>
+          <h3 class="text-h4 font-semibold leading-[1.4]">{item.title}</h3>
           <p class="mt-2 text-base font-medium leading-[1.7] text-ink/50">{item.place}</p>
           <p class="text-base font-medium leading-[1.7] text-ink/50">{item.period}</p>
-          <p class="mt-6 text-[18px] leading-[1.7]">{item.content}</p>
+          <p class="mt-6 text-body leading-[1.7]">{item.content}</p>
         </div>
       ))}
     </div>

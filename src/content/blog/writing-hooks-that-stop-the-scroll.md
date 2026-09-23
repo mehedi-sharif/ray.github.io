@@ -5,6 +5,9 @@ date: 2025-05-18
 image: "/images/blog/post-2.svg"
 category: "Scripts"
 draft: false
+aliases:
+  - "/blog/post-2/"
+  - "/blog/writing-hooks-that-stop-the-scroll/"
 ---
 
 How I structure the first three seconds of every ad script.

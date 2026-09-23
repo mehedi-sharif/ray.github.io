@@ -1,0 +1,45 @@
+---
+// Redirect stubs for every `aliases` entry in blog frontmatter.
+// GitHub Pages can't send a 301, so each stub is meta refresh + canonical (transfers ranking) + noindex.
+import { config, url } from "@/lib/utils";
+import { getPosts, toPath } from "@/lib/content";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  // Every URL a real page already owns. An alias equal to one of these would silently replace that page.
+  const taken = new Map<string, string>([
+    ["/", "src/pages/index.astro"],
+    ["/blog/", "src/pages/blog/index.astro"],
+    ["/404/", "src/pages/404.astro"],
+    ...posts.map((p) => [toPath(p.id), p.filePath ?? p.id] as [string, string]),
+  ]);
+
+  return posts.flatMap((post) =>
+    post.data.aliases.map((alias) => {
+      const path = toPath(alias);
+      if (taken.has(path)) {
+        throw new Error(`Alias "${alias}" in ${post.filePath} is already the URL of ${taken.get(path)}.`);
+      }
+      taken.set(path, `an alias in ${post.filePath}`);
+      return { params: { alias: path.slice(1, -1) }, props: { target: toPath(post.id) } };
+    }),
+  );
+}
+
+const { target } = Astro.props;
+const href = url(target);
+const canonical = new URL(href, config.site.base_url).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting…</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={canonical} />
+    <meta http-equiv="refresh" content={`0;url=${href}`} />
+  </head>
+  <body>
+    <a href={href}>Continue to the new page</a>
+  </body>
+</html>

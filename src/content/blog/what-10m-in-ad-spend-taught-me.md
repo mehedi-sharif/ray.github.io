@@ -5,6 +5,9 @@ date: 2025-06-02
 image: "/images/blog/post-1.svg"
 category: "Ads"
 draft: false
+aliases:
+  - "/blog/post-1/"
+  - "/blog/what-10m-in-ad-spend-taught-me/"
 ---
 
 Lessons on testing, scaling and knowing when to cut a campaign.

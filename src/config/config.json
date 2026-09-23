@@ -1,9 +1,11 @@
 {
   "site": {
+    "base_url": "https://rayhossain.com",
     "title": "Ray Hossain — Entrepreneur & Scriptwriter",
     "description": "Ray Hossain — entrepreneur, problem solver and scriptwriter. $10M in ad spend, $32M in revenue. Lifetime learner.",
     "favicon": "/favicon.svg",
-    "logo": ""
+    "logo": "",
+    "og_image": "/images/og-default.jpg"
   },
   "settings": {
     "default_theme": "dark"

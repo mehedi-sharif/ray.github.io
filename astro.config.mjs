@@ -1,22 +1,32 @@
+import { readdirSync, readFileSync } from "node:fs";
 import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
+import { parse } from "yaml";
+import config from "./src/config/config.json" with { type: "json" };
 
-// Hosted on GitHub Pages with the custom domain https://rayhossain.com (DNS on Cloudflare)
+// Hosted on GitHub Pages; the custom domain is set in the repo's Pages settings.
+const site = config.site.base_url;
+
+// Redirect stubs (from `aliases` in blog frontmatter) are noindex, so keep them out of the sitemap.
+// Parse frontmatter with `yaml`, not a regex: CRLF, BOMs and flow lists must all work.
+const blogDir = new URL("./src/content/blog/", import.meta.url);
+const aliasPaths = new Set(
+  readdirSync(blogDir)
+    .filter((f) => /\.mdx?$/.test(f))
+    .flatMap((f) => {
+      const raw = readFileSync(new URL(f, blogDir), "utf8").replace(/^﻿/, "");
+      const fm = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+      const data = fm ? parse(fm[1]) ?? {} : {};
+      return (data.aliases ?? []).map((a) => `/${String(a).replace(/^\/+|\/+$/g, "")}/`);
+    }),
+);
+
 export default defineConfig({
-  site: "https://rayhossain.com",
+  site,
   trailingSlash: "ignore",
-  // Old post URLs (/blog/post-N and /blog/<slug>) now live at /<slug>
-  redirects: {
-    "/blog/post-1": "/what-10m-in-ad-spend-taught-me",
-    "/blog/post-2": "/writing-hooks-that-stop-the-scroll",
-    "/blog/post-3": "/from-problem-to-profit",
-    "/blog/post-4": "/creative-vs-targeting",
-    "/blog/post-5": "/staying-a-lifetime-learner",
-    "/blog/creative-vs-targeting": "/creative-vs-targeting",
-    "/blog/from-problem-to-profit": "/from-problem-to-profit",
-    "/blog/staying-a-lifetime-learner": "/staying-a-lifetime-learner",
-    "/blog/what-10m-in-ad-spend-taught-me": "/what-10m-in-ad-spend-taught-me",
-    "/blog/writing-hooks-that-stop-the-scroll": "/writing-hooks-that-stop-the-scroll",
-  },
+  integrations: [
+    sitemap({ filter: (page) => !aliasPaths.has(new URL(page).pathname) }),
+  ],
   vite: { plugins: [tailwindcss()] },
 });

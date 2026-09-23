@@ -8,15 +8,14 @@ import Ticker from "@/components/Ticker.astro";
 import PostRow from "@/components/PostRow.astro";
 import Star from "@/components/Star.astro";
 import { url } from "@/lib/utils";
+import { getPosts } from "@/lib/content";
 
 const home = await getEntry("homepage", "-index");
 if (!home) throw new Error("Missing src/content/homepage/-index.md");
 const { hero, about, projects, experience, stats, ticker, education, writing, skills, contact } = home.data;
 
 const projectList = (await getCollection("projects", ({ data }) => !data.draft)).sort((a, b) => a.data.weight - b.data.weight);
-const posts = (await getCollection("blog", ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, writing.limit);
+const posts = (await getPosts()).slice(0, writing.limit);
 const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 [&:not(textarea)]:h-10 text-ink outline-none placeholder:text-ink/40 focus:ring-2 focus:ring-accent";
 ---
 <Base>
@@ -24,7 +23,7 @@ const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 [&:n
   <section id="home" class="wrap flex flex-col items-center pt-10 text-center md:pt-[90px]">
     <p class="eyebrow reveal">{hero.eyebrow}</p>
     <div class="relative mt-2.5 w-full">
-      <h1 class="font-display text-[clamp(96px,26vw,260px)] font-black uppercase leading-[1.1] tracking-[-0.02em] text-accent">
+      <h1 class="font-display text-hero font-black uppercase leading-[1.1] tracking-[-0.02em] text-accent">
         <span class="block">{hero.first_name}</span>
         <span class="-mt-[0.15em] block">{hero.last_name}</span>
       </h1>
@@ -37,7 +36,7 @@ const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 [&:n
     <div class="mt-2.5 flex h-20 items-center justify-center">
       <Star class="h-12 w-12 text-accent" />
     </div>
-    <p class="reveal mt-[26px] max-w-[550px] text-[18px] leading-[1.8] md:text-[22px]">{hero.content}</p>
+    <p class="reveal mt-[26px] max-w-[550px] text-body leading-[1.8] md:text-lead">{hero.content}</p>
     <a href="#about" class="mt-[26px] flex flex-col items-center gap-[11px] pt-[44px]">
       <span class="relative block h-[33px] w-[3px] overflow-hidden bg-ink/20">
         <span class="animate-scroll-line absolute left-0 top-0 block h-3.5 w-[3px] bg-accent"></span>
@@ -50,20 +49,20 @@ const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 [&:n
     <section id="about" class="wrap pt-[150px]">
       <SectionTitle title={about.title} />
       <div class="grid grid-cols-1 items-start gap-10 md:grid-cols-2 md:gap-[68px] md:pt-10">
-        <p class="reveal text-[20px] leading-[1.7] text-ink/50 md:sticky md:top-[160px] md:text-[22px]">{about.lead}</p>
+        <p class="reveal text-h4 leading-[1.7] text-ink/50 md:sticky md:top-[160px] md:text-lead">{about.lead}</p>
         <div>
-          <p class="reveal text-[18px] leading-[1.7]">{about.content}</p>
+          <p class="reveal text-body leading-[1.7]">{about.content}</p>
           <div class="mt-8 space-y-8">
             {about.tools.map((tool) => (
               <div class="reveal flex h-[142px] items-center rounded-lg bg-accent px-[22px] text-bg">
                 <div class:list={["min-w-0 flex-1", tool.value && "md:w-[161px] md:flex-none"]}>
-                  <p class="text-[26px] font-semibold leading-[1.1]">{tool.name}</p>
-                  <p class="mt-2.5 text-[16px] leading-[1.2] md:text-[18px]">{tool.note}</p>
+                  <p class="text-h3 font-semibold leading-[1.1]">{tool.name}</p>
+                  <p class="mt-2.5 text-base leading-[1.2] md:text-body">{tool.note}</p>
                 </div>
                 {tool.value && (
                   <>
                     <span class="mx-5 h-[46px] w-0.5 shrink-0 bg-bg/30 md:mx-8"></span>
-                    <p class="shrink-0 text-[40px] font-semibold leading-[1.2] text-bg/30 md:text-[60px]">{tool.value}</p>
+                    <p class="shrink-0 text-stat-sm font-semibold leading-[1.2] text-bg/30 md:text-stat">{tool.value}</p>
                   </>
                 )}
               </div>
@@ -81,7 +80,7 @@ const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 [&:n
         {projectList.map((p) => (
           <a href={p.data.link ? url(p.data.link) : "#projects"} class="reveal group relative block aspect-[444/320] overflow-hidden rounded-[4px]">
             <img src={url(p.data.image)} alt={p.data.title} loading="lazy" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <span class="absolute bottom-0 left-0 flex h-[65px] -translate-x-full items-center rounded-tr-lg bg-accent px-8 text-[18px] font-bold tracking-[-0.02em] text-bg opacity-0 transition duration-500 group-hover:translate-x-0 group-hover:opacity-100">{p.data.title}</span>
+            <span class="absolute bottom-0 left-0 flex h-[65px] -translate-x-full items-center rounded-tr-lg bg-accent px-8 text-body font-bold tracking-[-0.02em] text-bg opacity-0 transition duration-500 group-hover:translate-x-0 group-hover:opacity-100">{p.data.title}</span>
           </a>
         ))}
       </div>
@@ -133,8 +132,8 @@ const field = "w-full rounded-[4px] bg-ink/10 px-3 py-3 text-base leading-4 [&:n
       <SectionTitle title={contact.title} />
       <div class="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-[68px]">
         <div class="reveal">
-          <p class="text-[20px] leading-[1.7] md:text-[22px]">{contact.content}</p>
-          <ul class="mt-[38px] text-[18px] leading-[1.7]">
+          <p class="text-h4 leading-[1.7] md:text-lead">{contact.content}</p>
+          <ul class="mt-[38px] text-body leading-[1.7]">
             <li>{contact.address}</li>
             <li><a href={`mailto:${contact.email}`} class="text-accent hover:underline">{contact.email}</a></li>
             <li><a href={`https://${contact.website.replace(/^https?:\/\//, "")}`} target="_blank" rel="noopener" class="text-accent hover:underline">{contact.website}</a></li>

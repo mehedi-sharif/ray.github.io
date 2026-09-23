@@ -15,7 +15,7 @@ const btn = config.header_button;
         <ul>
           {menu.main.map((item, i) => (
             <li>
-              <a href={url(item.url)} data-menu-link class:list={["font-display text-[32px] font-bold uppercase leading-[1.4] tracking-[0.04em] transition-colors hover:text-accent", i === 0 ? "text-accent" : "text-ink"]}>{item.name}</a>
+              <a href={url(item.url)} data-menu-link class:list={["font-display text-title font-bold uppercase leading-[1.4] tracking-[0.04em] transition-colors hover:text-accent", i === 0 ? "text-accent" : "text-ink"]}>{item.name}</a>
             </li>
           ))}
         </ul>
